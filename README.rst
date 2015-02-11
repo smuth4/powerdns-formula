@@ -2,11 +2,7 @@ powerdns
 ========
 
 Installs a basic powerdns server.
-And optionally configures the backend for mysq
-
-Noter
-
-S
+And optionally configures the backend for mysql.
 
 Available states
 ================
