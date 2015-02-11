@@ -1,0 +1,59 @@
+# This file is managed by Salt, do not edit by hand!!
+# 
+{%- set powerdns_config = salt['pillar.get']('powerdns:backend-mysql', {}) -%}
+{#- present in powerdns_config and known in actual file options -#}
+{%- set processed_options = [] -%}
+
+{#- generic renderer used for powerdns matches, known options, -#}
+{#- and unknown options -#}
+{%- macro render_option(keyword, default, config_dict=powerdns_config) -%}
+  {%- set value = config_dict.get(keyword, default) -%}
+  {%- if value is sameas true -%}
+{{ keyword }}=yes
+  {%- elif value is sameas false -%}
+{{ keyword }}=no
+  {%- elif value is string or value is number -%}
+{{ keyword }}={{ value }}
+  {%- else -%}
+{%- for single_value in value -%}
+{{ keyword }}={{ single_value }}
+{% endfor -%}
+  {%- endif -%}
+{%- endmacro -%}
+
+{#- macros for render option according to present -#}
+{%- macro option_impl(keyword, default, present) -%}
+  {%- if present -%}
+    {%- do processed_options.append(keyword) -%}
+    {%- set prefix='' -%}
+  {%- else -%}
+    {%- set prefix='# ' -%}
+  {%- endif -%}
+  {#- add prefix to keyword -#}
+  {%- set keyword = prefix ~ keyword -%}
+{{ render_option(keyword, default) }}
+{%- endmacro -%}
+
+{#- macros for render option commented by default -#}
+{%- macro option(keyword, default, present) -%}
+{{ option_impl(keyword, default, keyword in powerdns_config) }}
+{%- endmacro -%}
+
+{#- macros for render option uncommented by default -#}
+{%- macro option_default_uncommented(keyword, default, present) -%}
+{{ option_impl(keyword, default, True) }}
+{%- endmacro -%}
+
+# MySQL Configuration
+#
+# Launch gmysql backend
+launch=gmysql
+
+# gmysql parameters
+{{ option_default_uncommented('gmysql-host','localhost') }}
+{{ option_default_uncommented('gmysql-port','') }}
+{{ option_default_uncommented('gmysql-dbname','pdns') }}
+{{ option_default_uncommented('gmysql-user','pdns') }}
+{{ option_default_uncommented('gmysql-password','secret') }}
+{{ option_default_uncommented('gmysql-dnssec','yes') }}
+{{ option('gmysql-socket','') }}

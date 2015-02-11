@@ -1,0 +1,11 @@
+{% set powerdns = salt['grains.filter_by']({
+    'Debian': {
+        'server': 'pdns-server',
+        'service':  'pdns',
+        'server_config': '/etc/powerdns/pdns.conf',
+        'server_config_src': 'salt://powerdns/files/pdns.conf',
+        'backend_mysql': 'pdns-backend-mysql',
+        'backend_mysql_config': '/etc/powerdns/pdns.d/pdns.local.gmysql',
+        'backend_mysql_config_src': 'salt://powerdns/files/pdns.local.gmysql',
+    },
+}, merge=salt['pillar.get']('powerdns:lookup')) %}
