@@ -14,3 +14,15 @@ powerdns:
       # Needed for create database, mostly mysql-root-user
       connection-user: 'root'
       connection-pass: 'mysql-root-pass'
+  # powerdns-backend-pgsql config
+  backend-pgsql:
+      gpgsql-host: 'pgsql.domain.tld'
+      gpgsql-port: '3306'
+      gpgsql-dbname: 'powerdns'
+      gpgsql-user: 'powerdns'
+      gpgsql-password: 'secret'
+      gpgsql-dnssec: 'yes'
+      # Needed for create database, mostly pgsql-root-user
+      connection-user: 'root'
+      connection-pass: 'pgsql-root-pass'
+  

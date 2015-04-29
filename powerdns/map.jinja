@@ -4,9 +4,12 @@
         'service':  'pdns',
         'server_config': '/etc/powerdns/pdns.conf',
         'server_config_src': 'salt://powerdns/files/pdns.conf',
-        'backend_mysql': 'pdns-backend-mysql',
+        'backend_mysql': 'pdns-backend-postgresql',
         'backend_mysql_config': '/etc/powerdns/pdns.d/pdns.local.gmysql',
         'backend_mysql_config_src': 'salt://powerdns/files/pdns.local.gmysql',
+        'backend_pgsql': 'pdns-backend-postgresql',
+        'backend_pgsql_config': '/etc/powerdns/pdns.d/pdns.local.gpgsql',
+        'backend_pgsql_config_src': 'salt://powerdns/files/pdns.local.gpgsql',
     },
     'Redhat': {
         'server': 'pdns',
@@ -16,5 +19,8 @@
         'backend_mysql': 'pdns-backend-mysql',
         'backend_mysql_config': '/etc/powerdns/pdns.d/pdns.local.gmysql',
         'backend_mysql_config_src': 'salt://powerdns/files/pdns.local.gmysql',
+        'backend_pgsql': 'pdns-backend-postgresql',
+        'backend_pgsql_config': '/etc/powerdns/pdns.d/pdns.local.gpgsql',
+        'backend_pgsql_config_src': 'salt://powerdns/files/pdns.local.gpgsql',
     },        
 }, merge=salt['pillar.get']('powerdns:lookup')) %}
