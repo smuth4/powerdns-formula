@@ -1,4 +1,4 @@
-{% from "powerdns/map.jinja" import powerdns with context %}
+{% from "map.jinja" import powerdns with context %}
 
 powerdns:
   pkg.installed:
