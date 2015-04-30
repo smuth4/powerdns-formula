@@ -15,6 +15,7 @@ powerdns-server-config:
   file.managed:
     - name: {{ powerdns.server_config }}
     - mode: '0600'
+    - makedirs: True
     - user: root
     - group: root
     - template: jinja
